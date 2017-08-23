@@ -44,7 +44,10 @@
   <ItemGroup>
     <Compile Include="Block.cs" />
     <Compile Include="BlockFactory.cs" />
-    <Compile Include="BlockSlot.cs" />
+    <Compile Include="BlockSlots\BlockSlot.cs" />
+    <Compile Include="BlockSlots\FlatSpace.cs" />
+    <Compile Include="BlockSlots\Hole.cs" />
+    <Compile Include="BlockSlots\Joint.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TenBlocks.cs" />
