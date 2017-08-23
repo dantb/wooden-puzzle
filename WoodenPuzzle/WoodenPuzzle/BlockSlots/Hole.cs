@@ -6,7 +6,7 @@ namespace WoodenPuzzle
     {
         public override bool CompatibleWith(BlockSlot other)
         {
-            throw new NotImplementedException();
+            return other is Joint;
         }
 
         public override string ToString()
