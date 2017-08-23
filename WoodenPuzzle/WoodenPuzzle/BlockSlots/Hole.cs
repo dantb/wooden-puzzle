@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace WoodenPuzzle
+﻿namespace WoodenPuzzle
 {
     public class Hole : BlockSlot
     {
