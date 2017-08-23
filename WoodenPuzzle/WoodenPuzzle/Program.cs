@@ -7,18 +7,44 @@ namespace WoodenPuzzle
     {
         static void Main(string[] args)
         {
+
+
+
+
+
             Console.ReadKey();
+
         }
     }
 
-    public class Block
+    public class TenBlocks : List<Block>
+    {
+        public TenBlocks(List<Block> blocks)
+        {
+            if (blocks.Count != 10)
+            {
+                throw new ArgumentException("A TenBlocks object can only be created with ten blocks");
+            }
+            foreach (Block block in blocks)
+            {
+                Add(block);
+            }
+        }
+    }
+
+    public class Block : List<BlockSlot>
     {
         public Block(List<BlockSlot> blockSlots)
         {
-            BlockSlots = blockSlots;
+            if (blockSlots.Count != 5)
+            {
+                throw new ArgumentException("A Block object can only be created with five BlockSlots");
+            }
+            foreach (BlockSlot slot in blockSlots)
+            {
+                Add(slot);
+            }
         }
-
-        public List<BlockSlot> BlockSlots { get;  }
     }
 
     public abstract class BlockSlot
