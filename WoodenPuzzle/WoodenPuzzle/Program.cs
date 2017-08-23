@@ -1,4 +1,4 @@
-﻿using System;
+﻿using static System.Console;
 
 namespace WoodenPuzzle
 {
@@ -6,15 +6,15 @@ namespace WoodenPuzzle
     {
         static void Main(string[] args)
         {
-            Console.WriteLine();
-            Console.WriteLine();
+            WriteLine();
+            WriteLine();
 
             BlockFactory blockFactory = new BlockFactory();
             TenBlocks tenBlocks = blockFactory.GetPuzzleWithTenBlocks();
 
-            Console.WriteLine( tenBlocks.ToString() );
+            WriteLine( tenBlocks.ToString() );
 
-            Console.ReadKey();
+            ReadKey();
         }
     }
 }
