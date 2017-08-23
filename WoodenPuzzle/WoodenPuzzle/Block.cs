@@ -48,6 +48,20 @@ namespace WoodenPuzzle
             return value;
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj is Block)
+            {
+                return (obj as Block).BlockId == BlockId;
+            }
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return BlockId;
+        }
+
         public int BlockId { get; }
     }
 }
