@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WoodenPuzzle
 {
-    public class Block : List<BlockSlot>
+    public class Block : List<BlockSlot>, IComparable<Block>
     {
         public Block(List<BlockSlot> blockSlots, int blockId)
         {
@@ -60,6 +60,12 @@ namespace WoodenPuzzle
         public override int GetHashCode()
         {
             return BlockId;
+        }
+
+        public int CompareTo(Block other)
+        {
+            // no two blocks have any relative comparison, only relative to grouping
+            return 0;
         }
 
         public int BlockId { get; }
