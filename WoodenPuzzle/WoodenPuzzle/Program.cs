@@ -14,6 +14,15 @@ namespace WoodenPuzzle
 
             WriteLine( tenBlocks.ToString() );
 
+            WriteLine();
+            WriteLine();
+            WriteLine();
+
+            Block original = tenBlocks[0];
+            WriteLine(original.ToString());
+            Block reversed = new Block(original);
+            WriteLine(reversed.ToString());
+
             ReadKey();
         }
     }

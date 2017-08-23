@@ -50,6 +50,7 @@
     <Compile Include="BlockSlots\Joint.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SolutionSkeleton.cs" />
     <Compile Include="TenBlocks.cs" />
   </ItemGroup>
   <ItemGroup>
