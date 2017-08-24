@@ -22,16 +22,12 @@ namespace WoodenPuzzle
             Combinations<Block> combinations = new Combinations<Block>(tenBlocks, 5);
             foreach (List<Block> combination in combinations)
             {
-                // we have a selection of 5 blocks, not ordered. We need to create a skeleton solution based on this
+                // we have a selection of 5 blocks, not ordered. Get permutations since order matters
                 List<IEnumerable<Block>> permutations = combination.Permute().ToList();
                 foreach (var permutation in permutations)
                 {
-                    foreach (Block block in permutation)
-                    {
-                        WriteLine(block);
-
-                    }
-                    WriteLine();
+                    // for each permutation, there 2 ^ 5 = 32 ways to flip the pieces
+                    WriteBlockList(permutation);
                 }
 
             }
@@ -46,69 +42,15 @@ namespace WoodenPuzzle
 
             ReadKey();
         }
-    }
 
-    public static class EnumerableExtensions
-    {
-
-        public static IEnumerable<IEnumerable<T>> Permute<T>(this IEnumerable<T> sequence)
+        private static void WriteBlockList(IEnumerable<Block> permutation)
         {
-            if (sequence == null)
+            foreach (Block block in permutation)
             {
-                yield break;
+                WriteLine(block);
+
             }
-
-            var list = sequence.ToList();
-
-            if (!list.Any())
-            {
-                yield return Enumerable.Empty<T>();
-            }
-            else
-            {
-                var startingElementIndex = 0;
-
-                foreach (var startingElement in list)
-                {
-                    var remainingItems = list.AllExcept(startingElementIndex);
-
-                    foreach (var permutationOfRemainder in remainingItems.Permute())
-                    {
-                        yield return startingElement.Concat(permutationOfRemainder);
-                    }
-
-                    startingElementIndex++;
-                }
-            }
-        }
-
-        private static IEnumerable<T> Concat<T>(this T firstElement, IEnumerable<T> secondSequence)
-        {
-            yield return firstElement;
-            if (secondSequence == null)
-            {
-                yield break;
-            }
-
-            foreach (var item in secondSequence)
-            {
-                yield return item;
-            }
-        }
-
-        private static IEnumerable<T> AllExcept<T>(this IEnumerable<T> sequence, int indexToSkip)
-        {
-            if (sequence == null)
-            {
-                yield break;
-            }
-
-            var index = 0;
-
-            foreach (var item in sequence.Where(item => index++ != indexToSkip))
-            {
-                yield return item;
-            }
+            WriteLine();
         }
     }
 }
