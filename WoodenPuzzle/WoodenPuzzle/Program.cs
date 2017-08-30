@@ -41,6 +41,8 @@ namespace WoodenPuzzle
             WriteLine();
             WriteLine();
 
+            // TODO: what I've written here is literally a variation written from scratch - permutations of combinations.
+            // just use the Variations object!
             Combinations<Block> combinations = new Combinations<Block>(tenBlocks, 5);
             foreach (List<Block> combination in combinations)
             {
@@ -49,17 +51,25 @@ namespace WoodenPuzzle
                 foreach (var permutation in permutations)
                 {
                     List<Block> permutationList = permutation.ToList();
+                    
                     // now we have an ordered list of 5 blocks. 
                     // for each permutation, there 2 ^ 5 = 32 ways to flip the pieces
-
-                    foreach (var variation in allVariations)
+                    foreach (List<bool> variation in allVariations)
                     {
+                        List<Block> finalFixedList = new List<Block>();
+                        for (int i = 0; i < variation.Count; i++)
+                        {
+                            // use the flag to choose reversed block or not
+                            // TODO: memoization can easily be used here to not keep reversing the blocks
+                            finalFixedList.Add(variation[i] ? permutationList[i] : new Block(permutationList[i]));
+                        }
+
+                        // final list for the bottom is built
+                        // the next step is to try variations of top pieces
+                        WriteBlockList(finalFixedList);
 
                     }
-
-                    WriteBlockList(permutation);
                 }
-
             }
             
             WriteLine();
