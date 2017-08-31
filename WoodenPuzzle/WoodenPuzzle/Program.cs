@@ -1,6 +1,5 @@
 ﻿using Facet.Combinatorics;
 using System.Collections.Generic;
-using System.Linq;
 using static System.Console;
 
 namespace WoodenPuzzle
@@ -15,21 +14,30 @@ namespace WoodenPuzzle
             BlockFactory blockFactory = new BlockFactory();
             TenBlocks tenBlocks = blockFactory.GetPuzzleWithTenBlocks();
 
-            WriteLine( tenBlocks.ToString() );
-
+            WriteLine(tenBlocks.ToString());
             WriteLine();
 
+            // all variations of true and false:
+            //    * true  = not reversed block
+            //    * false = reversed block
+            Variations<bool> flagVariations = CalculateAndPrintFlagVariations();
+
+            // get a collection of all 5 block variations, to form the bottom of our potential solution
+            HashSet<List<Block>> listsOfFiveBlocks = CalculateAllFiveBlockVariationsIncludingReversals(tenBlocks, flagVariations);
+
+            ReadKey();
+        }
+
+        private static Variations<bool> CalculateAndPrintFlagVariations()
+        {
             List<bool> reverseFlags = new List<bool>
             {
-                true, //true, true, true, true,
-                false, //false, false, false, false
+                true,
+                false
             };
 
-            // all variations of true and false:
-            //     true = not reversed block
-            //     false = reversed block
-            var allVariations = new Variations<bool>(reverseFlags, 5, GenerateOption.WithRepetition);
-            foreach (var item in allVariations)
+            var flagVariations = new Variations<bool>(reverseFlags, 5, GenerateOption.WithRepetition);
+            foreach (var item in flagVariations)
             {
                 foreach (var i in item)
                 {
@@ -38,49 +46,34 @@ namespace WoodenPuzzle
                 WriteLine();
             }
 
-            WriteLine();
-            WriteLine();
+            return flagVariations;
+        }
 
-            // TODO: what I've written here is literally a variation written from scratch - permutations of combinations.
-            // just use the Variations object!
-            Combinations<Block> combinations = new Combinations<Block>(tenBlocks, 5);
-            foreach (List<Block> combination in combinations)
+        private static HashSet<List<Block>> CalculateAllFiveBlockVariationsIncludingReversals(TenBlocks tenBlocks, Variations<bool> flagVariations)
+        {
+            var blockVariations = new Variations<Block>(tenBlocks, 5);
+            HashSet<List<Block>> listsOfFiveBlocks = new HashSet<List<Block>>();
+
+            foreach (var variation in blockVariations)
             {
-                // we have a selection of 5 blocks, not ordered. Get permutations since order matters
-                List<IEnumerable<Block>> permutations = combination.Permute().ToList();
-                foreach (var permutation in permutations)
+                // now we have an ordered list of 5 blocks. 
+                // for each permutation, there 2 ^ 5 = 32 ways to flip the pieces
+                foreach (List<bool> flagVariation in flagVariations)
                 {
-                    List<Block> permutationList = permutation.ToList();
-                    
-                    // now we have an ordered list of 5 blocks. 
-                    // for each permutation, there 2 ^ 5 = 32 ways to flip the pieces
-                    foreach (List<bool> variation in allVariations)
+                    List<Block> finalFixedList = new List<Block>();
+                    for (int i = 0; i < flagVariation.Count; i++)
                     {
-                        List<Block> finalFixedList = new List<Block>();
-                        for (int i = 0; i < variation.Count; i++)
-                        {
-                            // use the flag to choose reversed block or not
-                            // TODO: memoization can easily be used here to not keep reversing the blocks
-                            finalFixedList.Add(variation[i] ? permutationList[i] : new Block(permutationList[i]));
-                        }
-
-                        // final list for the bottom is built
-                        // the next step is to try variations of top pieces
-                        WriteBlockList(finalFixedList);
-
+                        // use the flag to choose reversed block or not
+                        // TODO: memoization can easily be used here to not keep reversing the blocks
+                        finalFixedList.Add(flagVariation[i] ? variation[i] : new Block(variation[i]));
                     }
+
+                    // final list for the bottom is built
+                    listsOfFiveBlocks.Add(finalFixedList);
                 }
             }
-            
-            WriteLine();
-            WriteLine();
 
-            Block original = tenBlocks[0];
-            WriteLine(original.ToString());
-            Block reversed = new Block(original);
-            WriteLine(reversed.ToString());
-
-            ReadKey();
+            return listsOfFiveBlocks;
         }
 
         private static void WriteBlockList(IEnumerable<Block> permutation)
