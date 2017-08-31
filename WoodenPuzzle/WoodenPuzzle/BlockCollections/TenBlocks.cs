@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WoodenPuzzle
 {
-    public class TenBlocks : List<Block>
+    public class TenBlocks : BlockCollectionBase
     {
         public TenBlocks(List<Block> blocks)
         {
@@ -15,18 +15,6 @@ namespace WoodenPuzzle
             {
                 Add(block);
             }
-        }
-
-        public override string ToString()
-        {
-            string value = this[0].ToString();
-
-            for (int i = 1; i < this.Count; i++)
-            {
-                value = string.Concat(value, "\n", this[i]);
-            }
-
-            return value;
         }
     }
 }

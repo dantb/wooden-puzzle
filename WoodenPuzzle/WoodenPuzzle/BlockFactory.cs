@@ -8,7 +8,7 @@ namespace WoodenPuzzle
         {
             List<Block> blocks = new List<Block>();
 
-            // creating blocks from real blocks. turning the blocks so that the more "interesting" stuff is on the left, just for ease.
+            // creating blocks from real blocks. turning the blocks so that the more "interesting" stuff is on the left, just to make recognising blocks easier.
             blocks.Add(
                 CreateBlock(
                     1, CreateBlockSlotArray1()));
