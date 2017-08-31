@@ -33,8 +33,7 @@ namespace WoodenPuzzle
                 if (blockToIndexMaping.Count == 5)
                 {
                     // this means we've matched all 5! we're done!
-                    // print the two layers
-
+                    // assign the layers
                     bottomLayerOfSolution = bottomFiveBlocks;
                     topLayerOfSolution = new FiveBlocks(blockToIndexMaping.Keys.ToList());
                     break;
