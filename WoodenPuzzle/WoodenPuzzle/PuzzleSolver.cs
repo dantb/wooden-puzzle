@@ -12,13 +12,9 @@ namespace WoodenPuzzle
             BlockFactory blockFactory = new BlockFactory();
             TenBlocks tenBlocks = blockFactory.GetPuzzleWithTenBlocks();
 
-            // all variations of true and false:
-            //  - true  = not reversed block
-            //  - false = reversed block
-            Variations<bool> flagVariations = CalculateAndPrintFlagVariations();
-
-            // get a collection of all 5 block variations, to form the bottom of our potential solution
-            HashSet<FiveBlocks> listsOfFiveBlocks = CalculateAllFiveBlockVariationsIncludingReversals(tenBlocks, flagVariations);
+            // get a collection of all 5 block variations including all possible flipped blocks.
+            // each of these FiveBlocks objects forms the bottom of a potential solution, until disproved
+            HashSet<FiveBlocks> listsOfFiveBlocks = CalculateAllFiveBlockVariationsIncludingReversals(tenBlocks);
 
             CalculateLayerOfSolution(out bottomLayerOfSolution, out topLayerOfSolution, tenBlocks, listsOfFiveBlocks);
         }
@@ -108,8 +104,13 @@ namespace WoodenPuzzle
             return new Variations<bool>(reverseFlags, 5, GenerateOption.WithRepetition);
         }
 
-        private HashSet<FiveBlocks> CalculateAllFiveBlockVariationsIncludingReversals(TenBlocks tenBlocks, Variations<bool> flagVariations)
+        private HashSet<FiveBlocks> CalculateAllFiveBlockVariationsIncludingReversals(TenBlocks tenBlocks)
         {
+            // all variations of true and false:
+            //  - true  = not reversed block
+            //  - false = reversed block
+            Variations<bool> flagVariations = CalculateAndPrintFlagVariations();
+
             var blockVariations = new Variations<Block>(tenBlocks, 5);
             HashSet<FiveBlocks> listsOfFiveBlocks = new HashSet<FiveBlocks>();
 
