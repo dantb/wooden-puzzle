@@ -4,6 +4,18 @@ using System.Linq;
 
 namespace WoodenPuzzle
 {
+    /// <summary>
+    /// <para>Loads up and solves a wooden block puzzle that has 10 blocks each with 5 slots, where a slot could be a hole, dimple or flat.</para>
+    /// <para>There solution needs to be formed of two layers. To fix one layer of 5, the permutation of combinations (aka variations) need to be calculated
+    /// and then each piece could be flipped in one of two positions.</para>
+    /// <para>So that's 10 choose 5 where ordering matters = 10!/5! = 30240 permutations (or rather, variations since the choice of 5 from the 10 is included in that calculation).
+    /// Each permutation could have 2^5 orientations in terms of block flipping (2 for each block), so that another factor of 32.</para>
+    /// <para>So there are 30240 x 32 = 967,680 ways we could fix one of the layers (arbitrarily let' say the bottom layer.)</para>
+    /// <para>Once that's done we simply need to, for each fixed 5, attempt to place the remaining 5 blocks perpendicular on top of the fixed 5.</para> 
+    /// <para>If any of the remaining blocks cannot be fit in any orientation or position on top, then that fixed five can be immediately disregarded as part of a potential solution, 
+    /// due to their relative incompatibility with one another.</para>
+    /// The second part of the calculation is computationally negligable when compared with the first - once we have the 5 fixed it's easy to invalidate solutions.
+    /// </summary>
     public class PuzzleSolver
     {
         public void SolveTenBlockPuzzle(out FiveBlocks bottomLayerOfSolution, out FiveBlocks topLayerOfSolution)
