@@ -7,6 +7,7 @@ namespace WoodenPuzzle
     {
         static void Main(string[] args)
         {
+            // loads up and solves a wooden block puzzle involving holes, knobs and flat pieces. can be applied in the generic case with ease.
             PuzzleSolver solver = new PuzzleSolver();
             solver.SolveTenBlockPuzzle(out FiveBlocks bottomLayerOfSolution, out FiveBlocks topLayerOfSolution);
 
