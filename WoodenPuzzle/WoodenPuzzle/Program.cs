@@ -7,6 +7,8 @@ namespace WoodenPuzzle
     {
         static void Main(string[] args)
         {
+            WriteLine("Press any key to calculate the puzzle solution: ");
+            ReadKey();
 
             PuzzleSolver solver = new PuzzleSolver();
             solver.SolveTenBlockPuzzle(out FiveBlocks bottomLayerOfSolution, out FiveBlocks topLayerOfSolution);
